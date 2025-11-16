@@ -1,0 +1,144 @@
+/**
+ * Mailiam Form Styles
+ * Clean, modern form styling that works with most themes
+ */
+
+.mailiam-form-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.mailiam-form {
+    display: block;
+}
+
+.mailiam-form-row {
+    margin-bottom: 1.5rem;
+}
+
+.mailiam-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.mailiam-required {
+    color: #d63638;
+}
+
+.mailiam-input,
+.mailiam-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.mailiam-input:focus,
+.mailiam-textarea:focus {
+    outline: none;
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+}
+
+.mailiam-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.mailiam-submit-row {
+    margin-top: 2rem;
+}
+
+.mailiam-submit-button {
+    background-color: #2271b1;
+    color: #fff;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: inline-block;
+}
+
+.mailiam-submit-button:hover {
+    background-color: #135e96;
+}
+
+.mailiam-submit-button:active {
+    background-color: #0a4b78;
+}
+
+.mailiam-submit-button:disabled {
+    background-color: #c3c4c7;
+    cursor: not-allowed;
+}
+
+.mailiam-message {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 4px;
+    animation: fadeIn 0.3s ease;
+}
+
+.mailiam-message p {
+    margin: 0;
+}
+
+.mailiam-success {
+    background-color: #d7f0d7;
+    border: 1px solid #00a32a;
+    color: #00a32a;
+}
+
+.mailiam-error {
+    background-color: #fcf0f1;
+    border: 1px solid #d63638;
+    color: #d63638;
+}
+
+.mailiam-notice {
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 4px;
+    border-left: 4px solid;
+}
+
+.mailiam-notice p {
+    margin: 0;
+}
+
+.mailiam-notice.mailiam-error {
+    background-color: #fcf0f1;
+    border-color: #d63638;
+    color: #d63638;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .mailiam-form-wrapper {
+        max-width: 100%;
+    }
+
+    .mailiam-submit-button {
+        width: 100%;
+    }
+}

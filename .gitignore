@@ -1,0 +1,30 @@
+# WordPress
+.DS_Store
+Thumbs.db
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Dependencies
+node_modules/
+
+# Note: vendor/ is NOT ignored because Plugin Update Checker must be included in distribution
+
+# Build files
+*.zip
+dist/
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Temporary files
+tmp/
+temp/
+*.tmp

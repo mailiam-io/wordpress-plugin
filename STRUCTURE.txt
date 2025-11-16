@@ -1,0 +1,153 @@
+Mailiam WordPress Plugin - File Structure
+==========================================
+
+mailiam-wordpress/
+│
+├── mailiam.php                  # Main plugin file (entry point)
+│
+├── includes/                    # Core PHP classes
+│   ├── class-mailiam-api.php    # API client - handles all Mailiam API calls
+│   ├── class-mailiam-admin.php  # Admin interface - settings page
+│   └── class-mailiam-form.php   # Form handler - shortcode & AJAX
+│
+├── assets/                      # Frontend assets
+│   ├── js/
+│   │   └── form.js              # AJAX form submission handler
+│   └── css/
+│       ├── form.css             # Form styling (frontend)
+│       └── admin.css            # Admin page styling
+│
+├── README.md                    # Developer documentation
+├── QUICKSTART.md                # 5-minute setup guide
+├── EXAMPLES.md                  # Real-world implementation examples
+├── CHANGELOG.md                 # Version history
+├── readme.txt                   # WordPress.org readme
+├── LICENSE                      # MIT License
+├── .gitignore                   # Git ignore rules
+└── STRUCTURE.txt                # This file
+
+Total Files: 14
+Total Lines of Code: 1,240
+
+Key Components:
+===============
+
+1. Main Plugin (mailiam.php)
+   - Plugin initialization
+   - WordPress hooks
+   - Activation/deactivation
+   - Helper functions
+
+2. API Client (class-mailiam-api.php)
+   - create_public_key()   - Generate public token
+   - submit_form()         - Send form data
+   - test_api_key()        - Validate credentials
+   - list_api_keys()       - Get all keys
+   - delete_api_key()      - Remove key
+
+3. Admin Interface (class-mailiam-admin.php)
+   - Settings page UI
+   - API key setup wizard
+   - Public token management
+   - Configuration validation
+
+4. Form Handler (class-mailiam-form.php)
+   - [mailiam_form] shortcode
+   - Form HTML generation
+   - AJAX submission handler
+   - Spam protection (honeypot)
+
+5. Frontend JavaScript (form.js)
+   - Form submission via AJAX
+   - Error/success handling
+   - Loading states
+   - XSS prevention
+
+6. Styling (CSS)
+   - Responsive form design
+   - Admin interface styling
+   - Theme compatibility
+   - Mobile-first approach
+
+WordPress Integration Points:
+==============================
+
+Hooks Used:
+- plugins_loaded          # Plugin initialization
+- admin_menu              # Add settings page
+- admin_init              # Register settings
+- wp_enqueue_scripts      # Load frontend assets
+- admin_enqueue_scripts   # Load admin assets
+
+AJAX Actions:
+- wp_ajax_mailiam_submit          # Logged-in users
+- wp_ajax_nopriv_mailiam_submit   # Logged-out users
+
+Filters Provided:
+- mailiam_form_fields     # Customize form HTML
+
+Shortcodes:
+- [mailiam_form]          # Render contact form
+
+Settings:
+- mailiam_settings        # Plugin configuration
+
+Data Flow:
+==========
+
+Setup Flow:
+-----------
+1. User enters API key in WordPress admin
+2. Plugin validates key with Mailiam API
+3. Plugin creates public token via API
+4. Public token stored in WordPress options
+5. Setup complete!
+
+Form Submission Flow:
+--------------------
+1. User fills form on WordPress page
+2. JavaScript prevents default submit
+3. AJAX POST to wp-admin/admin-ajax.php
+4. PHP handler validates & sanitizes data
+5. PHP sends to Mailiam API with public token
+6. Mailiam queues email for processing
+7. Success/error returned to JavaScript
+8. Message displayed to user
+
+Security Layers:
+===============
+
+1. WordPress Nonce        - CSRF protection
+2. Public Token           - Domain-scoped API key
+3. Honeypot Field         - Bot detection
+4. Origin Validation      - Header checking
+5. Rate Limiting          - Mailiam API (100/hr)
+6. Input Sanitization     - XSS prevention
+7. SQL Safety             - WordPress best practices
+
+Dependencies:
+=============
+
+Required:
+- WordPress 5.0+
+- PHP 7.4+
+- jQuery (bundled with WordPress)
+
+Optional:
+- Mailiam CLI (for configuration)
+- Mailiam account (required for service)
+
+File Sizes (approx):
+===================
+
+mailiam.php              ~5 KB
+class-mailiam-api.php    ~7 KB
+class-mailiam-admin.php  ~11 KB
+class-mailiam-form.php   ~9 KB
+form.js                  ~3 KB
+form.css                 ~4 KB
+admin.css                ~1 KB
+README.md                ~15 KB
+EXAMPLES.md              ~18 KB
+
+Total Plugin Size: ~73 KB (uncompressed)
