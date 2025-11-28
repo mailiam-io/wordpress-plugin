@@ -3,7 +3,7 @@
  * Plugin Name: Mailiam
  * Plugin URI: https://mailiam.io
  * Description: Powerful email forms with built-in spam protection, SRS forwarding, and reliable delivery. No SMTP configuration needed.
- * Version: 1.1.0
+ * Version: 1.2.1
  * Author: Mailiam
  * Author URI: https://mailiam.io
  * License: MIT
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('MAILIAM_VERSION', '1.1.0');
+define('MAILIAM_VERSION', '1.2.1');
 define('MAILIAM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('MAILIAM_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('MAILIAM_API_URL', 'https://api.mailiam.dev');
@@ -27,6 +27,7 @@ define('MAILIAM_API_URL', 'https://api.mailiam.dev');
 require_once MAILIAM_PLUGIN_DIR . 'includes/class-mailiam-api.php';
 require_once MAILIAM_PLUGIN_DIR . 'includes/class-mailiam-admin.php';
 require_once MAILIAM_PLUGIN_DIR . 'includes/class-mailiam-form.php';
+require_once MAILIAM_PLUGIN_DIR . 'includes/class-mailiam-mailer.php';
 
 // Load integrations
 if (file_exists(MAILIAM_PLUGIN_DIR . 'includes/integrations/class-mailiam-woocommerce.php')) {
@@ -86,6 +87,12 @@ class Mailiam {
         // Frontend initialization
         new Mailiam_Form();
 
+        // Initialize email override if enabled
+        $settings = get_option('mailiam_settings', array());
+        if (!empty($settings['email_override_enabled']) && !empty($settings['usage_key'])) {
+            new Mailiam_Mailer();
+        }
+
         // Activation/deactivation hooks
         register_activation_hook(__FILE__, array($this, 'activate'));
         register_deactivation_hook(__FILE__, array($this, 'deactivate'));
@@ -104,6 +111,7 @@ class Mailiam {
                 'domain' => parse_url(get_site_url(), PHP_URL_HOST),
                 'success_message' => 'Thank you! Your message has been sent.',
                 'error_message' => 'Sorry, there was an error sending your message. Please try again.',
+                'email_override_enabled' => false,
             ));
         }
     }
@@ -135,6 +143,7 @@ function mailiam_get_settings() {
         'domain' => parse_url(get_site_url(), PHP_URL_HOST),
         'success_message' => 'Thank you! Your message has been sent.',
         'error_message' => 'Sorry, there was an error sending your message. Please try again.',
+        'email_override_enabled' => false,
     ));
 }
 

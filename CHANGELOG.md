@@ -5,6 +5,65 @@ All notable changes to the Mailiam WordPress plugin will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2024-11-28
+
+### Added
+- **Manual Setup Mode** - Use existing API keys instead of creating new ones
+- Radio button setup method selection (Automatic vs Manual)
+- Manual key entry fields for public key and usage key
+- Automatic field toggling with JavaScript
+- Key format validation (mlm_pk_* for public, mlm_sk_* for usage)
+- API key testing before saving in manual mode
+- **Test Email Buttons** - Test your keys directly from the WordPress admin
+  - "Test Public Key" button to verify form submission capability
+  - "Send Test Email" button to verify transactional email sending
+  - Real-time AJAX testing with success/error feedback
+  - Test emails sent to admin email address
+
+### Changed
+- Refactored `sanitize_settings()` to support both setup modes
+- Domain field now auto-populated from site URL in manual mode
+- Improved setup instructions and field descriptions
+
+### Fixed
+- Prevents duplicate API key creation when users already have keys
+- Avoids hitting API key limits unnecessarily during setup
+- Better UX for users migrating from CLI to WordPress plugin
+
+### Technical Details
+- Backward compatible with existing auto-setup flow
+- Manual mode validates key prefixes before testing
+- Both modes share the same validation and storage logic
+- JavaScript-based UI toggling for clean user experience
+
+## [1.2.0] - 2024-11-28
+
+### Added
+- **WordPress Email Override** - Route ALL WordPress emails through Mailiam instead of SMTP
+- PHPMailer hook integration (`phpmailer_init`) for email interception
+- "WordPress Email Routing" section in admin settings
+- Opt-in checkbox to enable email override (disabled by default)
+- Graceful fallback to WordPress default email system if Mailiam API fails
+- `Mailiam_Mailer` class for handling email interception
+- Automatic email data extraction (To, From, CC, BCC, Reply-To, Subject, Body)
+- Debug logging when WP_DEBUG is enabled
+
+### Changed
+- Plugin version bumped to 1.2.0
+- Enhanced admin settings with email routing configuration
+- Updated default settings to include `email_override_enabled` flag
+
+### Features
+- Replaces WP Mail SMTP functionality
+- Handles password resets, user notifications, plugin emails, etc.
+- Compatible with all WordPress plugins and themes
+- No conflicts with other email plugins
+- Safe migration path from WP Mail SMTP
+
+### Known Limitations
+- Email attachments not yet supported (sends without attachments, logged as warning)
+- Future enhancement: Will add attachment support via base64 encoding
+
 ## [1.1.0] - 2024-11-16
 
 ### Added
@@ -98,4 +157,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **1.2.1** - Manual setup mode (use existing API keys)
+- **1.2.0** - WordPress email override (replaces WP Mail SMTP)
+- **1.1.0** - Transactional emails and WooCommerce integration
 - **1.0.0** - Initial release with core functionality
